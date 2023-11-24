@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triage Application Form</title>
+  <!-- Add your CSS styles here if needed -->
+</head>
+<body>
+
+  <h1>Triage Application</h1>
+
+  <form action="/submit" method="post">
+    <label for="group">Group:</label>
+    <input type="text" id="group" name="group" required>
+
+    <label for="sex">Sex:</label>
+    <select id="sex" name="sex" required>
+      <option value="1">Male</option>
+      <option value="2">Female</option>
+    </select>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" required>
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Web App</title>
+</head>
+<body>
+    <h1>Machine Learning Web App</h1>
+
+    <form action="/predict" method="post">
+        <!-- Add form fields based on your input data -->
+        <label for="input_data">Input Data:</label>
+        <input type="text" name="input_data" id="input_data" required>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if rf_prediction %}
+        <p>Random Forest Prediction: {{ rf_prediction }}</p>
+    {% endif %}
+
+    {% if lgbm_prediction %}
+        <p>LGBM Prediction: {{ lgbm_prediction }}</p>
+    {% endif %}
+</body>
+</html>
+
+    <label for="patients_per_hour">Patients number per hour:</label>
+    <input type="number" id="patients_per_hour" name="patients_per_hour" required>
+
+    <!-- Add other input fields based on your requirements -->
+
+    <label for="ktas">KTAS:</label>
+    <select id="ktas" name="ktas" required>
+      <option value="1">Emergency</option>
+      <option value="2">Non-Emergency</option>
+    </select>
+
+    <label for="submit-btn"></label>
+    <button type="submit" id="submit-btn">Submit</button>
+  </form>
+
+  <!-- Add your JavaScript code here if needed -->
+
+</body>
+</html>
