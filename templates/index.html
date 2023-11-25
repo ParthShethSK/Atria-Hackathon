@@ -1,73 +1,224 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Triage Application Form</title>
-  <!-- Add your CSS styles here if needed -->
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Emergency Triage Prediction</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
 
-  <h1>Triage Application</h1>
+      h1 {
+        color: #333;
+      }
 
-  <form action="/submit" method="post">
-    <label for="group">Group:</label>
-    <input type="text" id="group" name="group" required>
+      form {
+        max-width: 500px;
+        margin: 20px 0;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+      }
 
-    <label for="sex">Sex:</label>
-    <select id="sex" name="sex" required>
-      <option value="1">Male</option>
-      <option value="2">Female</option>
-    </select>
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
 
-    <label for="age">Age:</label>
-    <input type="number" id="age" name="age" required>
-<!-- templates/index.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Machine Learning Web App</title>
-</head>
-<body>
-    <h1>Machine Learning Web App</h1>
+      input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 12px;
+        box-sizing: border-box;
+      }
 
-    <form action="/predict" method="post">
-        <!-- Add form fields based on your input data -->
-        <label for="input_data">Input Data:</label>
-        <input type="text" name="input_data" id="input_data" required>
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
 
-        <button type="submit">Predict</button>
+      button:hover {
+        background-color: #45a049;
+      }
+
+      h2 {
+        color: #4caf50;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Emergency Triage Prediction</h1>
+
+    <form method="post" action="{{ url_for('predict_route') }}">
+      <label for="patients_number_per_hour">Patients Number per Hour:</label>
+      <input
+        type="number"
+        step="0.01"
+        name="patients_number_per_hour"
+        required
+      />
+
+      <label for="saturation">Saturation:</label>
+      <input type="number" step="0.01" name="saturation" required />
+
+      <label for="length_of_stay_min">Length of Stay (min):</label>
+      <input type="number" step="0.01" name="length_of_stay_min" required />
+
+      <label for="group_regional_ed">Group Regional ED (4th Degree):</label>
+      <input type="number" name="group_regional_ed" required />
+
+      <label for="sex_male">Sex Male:</label>
+      <input type="number" name="sex_male" required />
+
+      <label for="arrival_mode_private_ambulance"
+        >Arrival Mode Private Ambulance:</label
+      >
+      <input type="number" name="arrival_mode_private_ambulance" required />
+
+      <label for="arrival_mode_private_vehicle"
+        >Arrival Mode Private Vehicle:</label
+      >
+      <input type="number" name="arrival_mode_private_vehicle" required />
+
+      <label for="arrival_mode_public_ambulance"
+        >Arrival Mode Public Ambulance:</label
+      >
+      <input type="number" name="arrival_mode_public_ambulance" required />
+
+      <label for="arrival_mode_walking">Arrival Mode Walking:</label>
+      <input type="number" name="arrival_mode_walking" required />
+
+      <label for="injury_yes">Injury Yes:</label>
+      <input type="number" name="injury_yes" required />
+
+      <label for="mental_pain_response">Mental Pain Response:</label>
+      <input type="number" name="mental_pain_response" required />
+
+      <label for="mental_unresponsive">Mental Unresponsive:</label>
+      <input type="number" name="mental_unresponsive" required />
+
+      <label for="mental_verbose_response">Mental Verbose Response:</label>
+      <input type="number" name="mental_verbose_response" required />
+
+      <label for="pain_yes">Pain Yes:</label>
+      <input type="number" name="pain_yes" required />
+
+      <label for="ktas_rn_non_emergency">KTAS RN Non-Emergency:</label>
+      <input type="number" name="ktas_rn_non_emergency" required />
+
+      <label for="disposition_admission_to_ward"
+        >Disposition Admission to Ward:</label
+      >
+      <input type="number" name="disposition_admission_to_ward" required />
+
+      <label for="disposition_death">Disposition Death:</label>
+      <input type="number" name="disposition_death" required />
+
+      <label for="disposition_discharge">Disposition Discharge:</label>
+      <input type="number" name="disposition_discharge" required />
+
+      <label for="disposition_surgery">Disposition Surgery:</label>
+      <input type="number" name="disposition_surgery" required />
+
+      <label for="disposition_transfer">Disposition Transfer:</label>
+      <input type="number" name="disposition_transfer" required />
+
+      <label for="ktas_expert_non_emergency">KTAS Expert Non-Emergency:</label>
+      <input type="number" name="ktas_expert_non_emergency" required />
+
+      <label for="new_age_adult">New Age Adult:</label>
+      <input type="number" name="new_age_adult" required />
+
+      <label for="new_age_mid_age">New Age Mid Age:</label>
+      <input type="number" name="new_age_mid_age" required />
+
+      <label for="new_age_old">New Age Old:</label>
+      <input type="number" name="new_age_old" required />
+
+      <label for="new_sbp_low">New SBP Low:</label>
+      <input type="number" name="new_sbp_low" required />
+
+      <label for="new_sbp_normal">New SBP Normal:</label>
+      <input type="number" name="new_sbp_normal" required />
+
+      <label for="new_dbp_low">New DBP Low:</label>
+      <input type="number" name="new_dbp_low" required />
+
+      <label for="new_dbp_normal">New DBP Normal:</label>
+      <input type="number" name="new_dbp_normal" required />
+
+      <label for="new_hr_low">New HR Low:</label>
+      <input type="number" name="new_hr_low" required />
+
+      <label for="new_hr_normal">New HR Normal:</label>
+      <input type="number" name="new_hr_normal" required />
+
+      <label for="new_rr_low">New RR Low:</label>
+      <input type="number" name="new_rr_low" required />
+
+      <label for="new_rr_normal">New RR Normal:</label>
+      <input type="number" name="new_rr_normal" required />
+
+      <label for="new_bt_low">New BT Low:</label>
+      <input type="number" name="new_bt_low" required />
+
+      <label for="new_bt_normal">New BT Normal:</label>
+      <input type="number" name="new_bt_normal" required />
+
+      <label for="new_nrs_pain_low_pain">New NRS Pain Low Pain:</label>
+      <input type="number" name="new_nrs_pain_low_pain" required />
+
+      <label for="new_nrs_pain_pain">New NRS Pain Pain:</label>
+      <input type="number" name="new_nrs_pain_pain" required />
+
+      <label for="new_ktas_duration_min_very_urgent"
+        >New KTAS Duration Min Very Urgent:</label
+      >
+      <input type="number" name="new_ktas_duration_min_very_urgent" required />
+
+      <label for="new_length_of_stay_min_non_urgent"
+        >New Length of Stay Min Non-Urgent:</label
+      >
+      <input type="number" name="new_length_of_stay_min_non_urgent" required />
+
+      <label for="new_length_of_stay_min_standard"
+        >New Length of Stay Min Standard:</label
+      >
+      <input type="number" name="new_length_of_stay_min_standard" required />
+
+      <label for="new_length_of_stay_min_urgent"
+        >New Length of Stay Min Urgent:</label
+      >
+      <input type="number" name="new_length_of_stay_min_urgent" required />
+
+      <label for="new_length_of_stay_min_very_urgent"
+        >New Length of Stay Min Very Urgent:</label
+      >
+      <input type="number" name="new_length_of_stay_min_very_urgent" required />
+
+      <!-- Add more labels and inputs for the remaining features as needed -->
+
+      <button type="submit">Predict</button>
     </form>
 
     {% if rf_prediction %}
-        <p>Random Forest Prediction: {{ rf_prediction }}</p>
+    <h2>Random Forest Prediction: {{ rf_prediction }}</h2>
     {% endif %}
 
     {% if lgbm_prediction %}
-        <p>LGBM Prediction: {{ lgbm_prediction }}</p>
+    <h2>LGBM Prediction: {{ lgbm_prediction }}</h2>
     {% endif %}
-</body>
-</html>
 
-    <label for="patients_per_hour">Patients number per hour:</label>
-    <input type="number" id="patients_per_hour" name="patients_per_hour" required>
-
-    <!-- Add other input fields based on your requirements -->
-
-    <label for="ktas">KTAS:</label>
-    <select id="ktas" name="ktas" required>
-      <option value="1">Emergency</option>
-      <option value="2">Non-Emergency</option>
-    </select>
-
-    <label for="submit-btn"></label>
-    <button type="submit" id="submit-btn">Submit</button>
-  </form>
-
-  <!-- Add your JavaScript code here if needed -->
-
-</body>
+    {% if svm_prediction %}
+    <h2>SVM Prediction: {{ svm_prediction }}</h2>
+    {% endif %}
 </html>
